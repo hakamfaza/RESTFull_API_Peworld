@@ -9,13 +9,13 @@ const multerUpload = multer({
       cb(null, './public');
     },
     filename: (req, file, cb) => {
-      const ext = path.extname(file.originalName);
+      const ext = path.extname(file.originalname);
       const filename = `${Date.now()}${ext}`;
       cb(null, filename);
     },
   }),
   fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalName);
+    const ext = path.extname(file.originalname);
     if (ext === '.jpg' || ext === '.png' || ext === '.JPG' || ext === '.PNG') {
       cb(null, true);
     } else {

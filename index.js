@@ -5,6 +5,8 @@ const xss = require('xss-clean');
 
 const { SERVER_HOST, SERVER_PORT } = require('./src/utils/env');
 
+const auth = require('./src/router/auth.router');
+
 const app = express();
 
 app.use(express.json());
@@ -21,7 +23,7 @@ app.use(express.static('public'));
 
 const data = () => {
   try {
-    // app.use();
+    app.use(auth);
   } catch (error) {
     console.log(error);
   }
