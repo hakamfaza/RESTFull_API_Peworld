@@ -12,6 +12,14 @@ const auth = {
       resolve(result);
     });
   }),
+  login: (email) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM users WHERE email=$1', [email], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
 
 module.exports = auth;
