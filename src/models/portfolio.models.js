@@ -47,4 +47,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  portfolioByUser: (userId) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM portfolio WHERE user_id=$1', [userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };

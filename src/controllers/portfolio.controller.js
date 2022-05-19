@@ -154,4 +154,22 @@ module.exports = {
       });
     }
   },
+  portfolioByUser: async (req, res) => {
+    try {
+      const userId = req.APP_DATA.tokenDecoded.id;
+      const response = await portfolioModels.portfolioByUser(userId);
+
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get portfolio by user success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };
