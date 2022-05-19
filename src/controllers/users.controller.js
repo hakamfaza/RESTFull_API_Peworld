@@ -43,12 +43,29 @@ const user = {
         id: req.params.id,
         ...req.body,
       };
-      console.log(insertData);
       const response = await usersModel.updateUsers(insertData);
       sucess(res, {
         code: 200,
         payload: response,
         message: 'update users success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const response = await usersModel.deleteUser(id);
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'success delete user!',
       });
     } catch (error) {
       failed(res, {

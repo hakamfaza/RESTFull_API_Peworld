@@ -36,4 +36,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  deleteUser: (id) => new Promise((resolve, reject) => {
+    db.query('DELETE FROM users WHERE id=$1', [id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
