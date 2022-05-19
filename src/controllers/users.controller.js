@@ -41,7 +41,10 @@ const user = {
       const insertData = {
         id: req.params.id,
         ...req.body,
+        linkedin: `https://www.linkedin.com/in/${req.body.linkedin}/`,
+        instagram: `https://www.instagram.com/${req.body.instagram}/`,
       };
+      console.log(insertData);
       const response = await usersModel.updateUsers(insertData);
       sucess(res, {
         code: 200,
