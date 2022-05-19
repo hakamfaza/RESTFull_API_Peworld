@@ -137,7 +137,7 @@ module.exports = {
       if (user.rowCount) {
         const token = crypto.randomBytes(30).toString('hex');
         // Update token
-        await authModel.updateToken(token);
+        await authModel.updateToken(user.rows[0].id, token);
 
         const templateEmail = {
           from: `${APP_NAME} <${EMAIL_FROM}>`,
@@ -159,6 +159,37 @@ module.exports = {
         code: 500,
         payload: error.message,
         message: 'internal server error!',
+      });
+    }
+  },
+  reset: async (req, res) => {
+    try {
+      const { token } = req.params;
+      const user = await authModel.checkToken(token);
+
+      if (!user.rowCount) {
+        failed(res, {
+          code: 400,
+          payload: 'token invalid!',
+          message: 'reset password failed!',
+        });
+        return;
+      }
+
+      const password = await bcrypt.hash(req.body.password, salt);
+      await authModel.resetPassword(user.rows[0].id, password);
+      await authModel.updateToken(user.rows[0], '');
+
+      sucess(res, {
+        code: 200,
+        payload: null,
+        message: 'reset password success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server erorr!',
       });
     }
   },
