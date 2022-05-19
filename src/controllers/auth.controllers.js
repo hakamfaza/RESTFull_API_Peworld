@@ -35,6 +35,7 @@ module.exports = {
         ...req.body,
         password,
         createDate: new Date(),
+        photo: req.file.filename,
       };
       const response = await authModel.register(insertData);
       await authModel.updateToken(insertData.id, token);

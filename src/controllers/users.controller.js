@@ -1,7 +1,8 @@
 const usersModel = require('../models/users.model');
 const { sucess, failed } = require('../utils/response');
+const deleteFile = require('../utils/deleteFile');
 
-const user = {
+const userController = {
   getUser: async (req, res) => {
     try {
       const response = await usersModel.getUser();
@@ -38,11 +39,34 @@ const user = {
   },
   updateUser: async (req, res) => {
     try {
+      const { id } = req.params;
+
+      const user = await usersModel.getDetailUser(id);
+
+      if (!user.rowCount) {
+        if (req.file) {
+          deleteFile(req.file.path);
+        }
+        failed(res, {
+          code: 400,
+          payload: 'user not found!',
+          message: 'update user failed!',
+        });
+        return;
+      }
+
+      if (req.file) {
+        if (user.rows[0].photo) {
+          deleteFile(`public/${user.rows[0].photo}`);
+        }
+      }
+
       const insertData = {
-        id: req.params.id,
+        id,
         ...req.body,
         linkedin: `https://www.linkedin.com/in/${req.body.linkedin}/`,
         instagram: `https://www.instagram.com/${req.body.instagram}/`,
+        photo: req.file.filename,
       };
       const response = await usersModel.updateUsers(insertData);
       sucess(res, {
@@ -78,4 +102,4 @@ const user = {
   },
 };
 
-module.exports = user;
+module.exports = userController;
