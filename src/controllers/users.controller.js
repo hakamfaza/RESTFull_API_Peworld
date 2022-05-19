@@ -37,6 +37,27 @@ const user = {
       });
     }
   },
+  updateUser: async (req, res) => {
+    try {
+      const insertData = {
+        id: req.params.id,
+        ...req.body,
+      };
+      console.log(insertData);
+      const response = await usersModel.updateUsers(insertData);
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'update users success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };
 
 module.exports = user;

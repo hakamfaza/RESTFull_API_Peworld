@@ -25,4 +25,15 @@ module.exports = {
       resolve(result);
     });
   }),
+  updateUsers: (body) => new Promise((resolve, reject) => {
+    const {
+      id, name, jobDesk, address, workplace, description,
+    } = body;
+    db.query('UPDATE users SET name=$1, job_desk=$2, address=$3, workplace=$4, description=$5 WHERE id=$6', [name, jobDesk, address, workplace, description, id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
