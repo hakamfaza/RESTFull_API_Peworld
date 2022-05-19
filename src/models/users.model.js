@@ -1,8 +1,16 @@
 const db = require('../config/db');
 
 module.exports = {
-  getUser: () => new Promise((resolve, reject) => {
-    db.query('SELECT * FROM users', (err, result) => {
+  allData: () => new Promise((resolve, reject) => {
+    db.query('SELECT COUNT(*) AS total FROM users WHERE is_active = true', (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
+  getUser: (getSearch, sortByField, sortByType, getLimitValue, getOffsetValue, getIsActive) => new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM users WHERE name ILIKE '%${getSearch}%' AND is_active=${getIsActive} ORDER BY ${sortByField} ${sortByType} LIMIT ${getLimitValue} OFFSET ${getOffsetValue}`, (err, result) => {
       if (err) {
         reject(err);
       }

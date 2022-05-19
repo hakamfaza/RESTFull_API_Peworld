@@ -5,11 +5,36 @@ const deleteFile = require('../utils/deleteFile');
 const userController = {
   getUser: async (req, res) => {
     try {
-      const response = await usersModel.getUser();
+      const {
+        search, sortField, sortType, page, limit, isActive,
+      } = req.query;
+      const getIsActive = isActive || true;
+
+      const getSearch = search || '';
+      const sortByField = sortField || 'name';
+      const sortByType = sortType || 'ASC';
+
+      // pagination
+      const getPageValue = page ? Number(page) : 1;
+      const getLimitValue = limit ? Number(limit) : 5;
+      const getOffsetValue = (getPageValue - 1) * getLimitValue;
+      const allData = await usersModel.allData();
+      const totalData = Number(allData.rows[0].total);
+
+      const pagination = {
+        currentPage: getPageValue,
+        dataPerPage: getLimitValue,
+        totalPage: Math.ceil(totalData / getLimitValue),
+        totalData,
+      };
+
+      const response = await usersModel.getUser(getSearch, sortByField, sortByType, getLimitValue, getOffsetValue, getIsActive);
+
       sucess(res, {
         code: 200,
         payload: response.rows,
         message: 'get all users success!',
+        pagination,
       });
     } catch (error) {
       failed(res, {
