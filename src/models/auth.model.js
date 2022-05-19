@@ -12,6 +12,14 @@ const auth = {
       resolve(result);
     });
   }),
+  updateToken: (id, token) => new Promise((resolve, reject) => {
+    db.query('UPDATE users SET token=$1 WHERE id=$2', [token, id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
   login: (email) => new Promise((resolve, reject) => {
     db.query('SELECT * FROM users WHERE email=$1', [email], (err, result) => {
       if (err) {

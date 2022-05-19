@@ -26,7 +26,7 @@ module.exports = {
       }
 
       const password = await bcrypt.hash(req.body.password, salt);
-
+      const token = crypto.randomBytes(30).toString('hex');
       const insertData = {
         id: uuidv4(),
         ...req.body,
@@ -34,11 +34,13 @@ module.exports = {
         createDate: new Date(),
       };
       const response = await authModel.register(insertData);
+      await authModel.updateToken(insertData.id, token);
+
       const templateEmail = {
         from: `${APP_NAME} <${EMAIL_FROM}>`,
         to: req.body.email.toLowerCase(),
         subject: 'Activate Your Email!',
-        html: activateAccoount(`${API_URL}/activation/dslflskajd`),
+        html: activateAccoount(`${API_URL}/activation/${token}`),
       };
       sendMail(templateEmail);
 
