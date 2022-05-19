@@ -178,7 +178,7 @@ module.exports = {
 
       const password = await bcrypt.hash(req.body.password, salt);
       await authModel.resetPassword(user.rows[0].id, password);
-      await authModel.updateToken(user.rows[0], '');
+      await authModel.updateToken(user.rows[0].id, '');
 
       sucess(res, {
         code: 200,

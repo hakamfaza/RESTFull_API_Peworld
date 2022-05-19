@@ -30,7 +30,7 @@ const user = {
       });
     } catch (error) {
       failed(res, {
-        code: 200,
+        code: 500,
         payload: error.message,
         message: 'internal server eroor!',
       });
@@ -44,7 +44,6 @@ const user = {
         linkedin: `https://www.linkedin.com/in/${req.body.linkedin}/`,
         instagram: `https://www.instagram.com/${req.body.instagram}/`,
       };
-      console.log(insertData);
       const response = await usersModel.updateUsers(insertData);
       sucess(res, {
         code: 200,
