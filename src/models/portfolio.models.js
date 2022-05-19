@@ -20,4 +20,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  getDetailPortfolio: (id) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM portfolio WHERE id=$1', [id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };

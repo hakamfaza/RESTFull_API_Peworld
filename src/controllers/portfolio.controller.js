@@ -43,4 +43,22 @@ module.exports = {
       });
     }
   },
+  getDetailPortfolio: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const response = await portfolioModels.getDetailPortfolio(id);
+
+      sucess(res, {
+        code: 200,
+        payload: response.rows[0],
+        message: 'get detail portfolio succes!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };
