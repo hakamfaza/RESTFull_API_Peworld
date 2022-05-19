@@ -1,4 +1,4 @@
-const activationAccount = (link) => {
+const activationAccount = (link, action) => {
   const htmlContent = `
   <!DOCTYPE html>
   <html lang="en">
@@ -60,17 +60,17 @@ const activationAccount = (link) => {
         </tr>
         <tr>
          <td align='center'>
-          <h1 class='title' >Verification Your Email</h1>
+          <h1 class='title' >${action} Your Account</h1>
          </td>
         </tr>
         <tr>
           <td align='center'>
-            <p class='text'>The following is the button for you to verify account.</p>
+            <p class='text'>The following is the button for you to ${action.toLowerCase()} account.</p>
           </td>
          </tr>
          <tr>
           <td align='center'>
-            <a class='verification' href='${link}'>Verify Account</a>
+            <a class='verification' href='${link}'>${action}</a>
           </td>
          </tr>
          <tr>

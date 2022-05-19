@@ -4,9 +4,12 @@ const { v4: uuidv4 } = require('uuid');
 const userModel = require('../models/users.model');
 const authModel = require('../models/auth.model');
 const jwtToken = require('../utils/generatejwtToken');
-const activateAccoount = require('../utils/email/activationAccount');
+const actionAccount = require('../utils/email/activationAccount');
+const sendEmail = require('../utils/email/sendEmail');
 const { sucess, failed } = require('../utils/response');
-const { APP_NAME, EMAIL_FROM, API_URL } = require('../utils/env');
+const {
+  APP_NAME, EMAIL_FROM, API_URL, CLIENT_URL,
+} = require('../utils/env');
 const sendMail = require('../utils/email/sendEmail');
 
 const salt = 10;
@@ -40,7 +43,7 @@ module.exports = {
         from: `${APP_NAME} <${EMAIL_FROM}>`,
         to: req.body.email.toLowerCase(),
         subject: 'Activate Your Email!',
-        html: activateAccoount(`${API_URL}/activation/${token}`),
+        html: actionAccount(`${API_URL}/activation/${token}`, 'Verify'),
       };
       sendMail(templateEmail);
 
@@ -119,6 +122,37 @@ module.exports = {
         code: 400,
         payload: 'wrong email or password!',
         message: 'login failed!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  forgot: async (req, res) => {
+    try {
+      const user = await userModel.selectByEmail(req.body.email);
+      if (user.rowCount) {
+        const token = crypto.randomBytes(30).toString('hex');
+        // Update token
+        await authModel.updateToken(token);
+
+        const templateEmail = {
+          from: `${APP_NAME} <${EMAIL_FROM}>`,
+          to: req.body.email.toLowerCase(),
+          subject: 'Reset Your Password!',
+          html: actionAccount(`${CLIENT_URL}/reset/${token}`, 'Reset Password'),
+        };
+        sendEmail(templateEmail);
+      }
+
+      sucess(res, {
+        code: 200,
+        payload: null,
+        message: 'forgot password success!',
+
       });
     } catch (error) {
       failed(res, {
