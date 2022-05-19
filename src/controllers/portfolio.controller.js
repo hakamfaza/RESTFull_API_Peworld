@@ -27,4 +27,20 @@ module.exports = {
       });
     }
   },
+  getPortfolio: async (req, res) => {
+    try {
+      const response = await portfolioModels.getPortfolio();
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get all portfolio success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };
