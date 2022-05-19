@@ -20,6 +20,22 @@ const auth = {
       resolve(result);
     });
   }),
+  checkToken: (token) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM users WHERE token=$1', [token], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
+  activateAccount: (id) => new Promise((resolve, reject) => {
+    db.query('UPDATE users SET is_verify=true WHERE id=$1', [id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
   login: (email) => new Promise((resolve, reject) => {
     db.query('SELECT * FROM users WHERE email=$1', [email], (err, result) => {
       if (err) {

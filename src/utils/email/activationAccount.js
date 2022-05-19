@@ -65,8 +65,7 @@ const activationAccount = (link) => {
         </tr>
         <tr>
           <td align='center'>
-            <p class='text'>The following is the button for you to reset
-              the password.</p>
+            <p class='text'>The following is the button for you to verify account.</p>
           </td>
          </tr>
          <tr>
