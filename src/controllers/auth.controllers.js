@@ -4,7 +4,10 @@ const { v4: uuidv4 } = require('uuid');
 const userModel = require('../models/users.model');
 const authModel = require('../models/auth.model');
 const jwtToken = require('../utils/generatejwtToken');
+const activateAccoount = require('../utils/email/activationAccount');
 const { sucess, failed } = require('../utils/response');
+const { APP_NAME, EMAIL_FROM, API_URL } = require('../utils/env');
+const sendMail = require('../utils/email/sendEmail');
 
 const salt = 10;
 
@@ -31,6 +34,13 @@ module.exports = {
         createDate: new Date(),
       };
       const response = await authModel.register(insertData);
+      const templateEmail = {
+        from: `${APP_NAME} <${EMAIL_FROM}>`,
+        to: req.body.email.toLowerCase(),
+        subject: 'Activate Your Email!',
+        html: activateAccoount(`${API_URL}/activation/dslflskajd`),
+      };
+      sendMail(templateEmail);
 
       sucess(res, {
         code: 200,
