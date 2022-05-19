@@ -28,4 +28,15 @@ module.exports = {
       resolve(result);
     });
   }),
+  updatePortfolio: (body) => new Promise((resolve, reject) => {
+    const {
+      title, photo, id, userId,
+    } = body;
+    db.query('UPDATE portfolio SET title=$1, photo=$2 WHERE id=$3 AND user_id=$4', [title, photo, id, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };

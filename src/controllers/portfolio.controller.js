@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const portfolioModels = require('../models/portfolio.models');
+const deleteFile = require('../utils/deleteFile');
 const { sucess, failed } = require('../utils/response');
 
 module.exports = {
@@ -52,6 +53,64 @@ module.exports = {
         code: 200,
         payload: response.rows[0],
         message: 'get detail portfolio succes!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  updatePortfolio: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.APP_DATA.tokenDecoded.id;
+      const portfolio = await portfolioModels.getDetailPortfolio(id);
+
+      if (!portfolio.rowCount) {
+        if (req.file) {
+          deleteFile(req.file.path);
+        }
+        failed(res, {
+          code: 400,
+          payload: 'portfolio not found!',
+          message: 'update portfolio failed!',
+        });
+        return;
+      }
+
+      if (req.file) {
+        if (portfolio.rows[0].photo) {
+          deleteFile(`public/${portfolio.rows[0].photo}`);
+        }
+      }
+
+      const insertData = {
+        id: req.params.id,
+        photo: req.file.filename,
+        title: req.body.title,
+        userId,
+      };
+
+      const response = await portfolioModels.updatePortfolio(insertData);
+
+      if (!response.rowCount) {
+        if (req.file) {
+          deleteFile(req.file.path);
+        }
+        failed(res, {
+          code: 400,
+          payload: 'can\'t update this portfolio!',
+          message: 'update portfolio failed!',
+        });
+        return;
+      }
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'update portfolio success!',
       });
     } catch (error) {
       failed(res, {
