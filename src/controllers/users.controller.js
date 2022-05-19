@@ -5,7 +5,6 @@ const user = {
   getUser: async (req, res) => {
     try {
       const response = await usersModel.getUser();
-      console.log(response.rows);
       sucess(res, {
         code: 200,
         payload: response.rows,
