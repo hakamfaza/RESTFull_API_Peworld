@@ -120,4 +120,38 @@ module.exports = {
       });
     }
   },
+  deletePorfolio: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.APP_DATA.tokenDecoded.id;
+
+      const portfolio = await portfolioModels.getDetailPortfolio(id);
+
+      if (!portfolio.rowCount) {
+        if (req.file) {
+          deleteFile(req.file.path);
+        }
+        failed(res, {
+          code: 400,
+          payload: 'portfolio not found!',
+          message: 'delete portfolio failed!',
+        });
+        return;
+      }
+
+      const response = await portfolioModels.deletePortfolio(id, userId);
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'delete portfolio success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server erorr!',
+      });
+    }
+  },
 };
