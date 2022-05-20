@@ -14,6 +14,7 @@ module.exports = {
           date: new Date(),
           skill: item,
         };
+        console.log(data);
         await skillsModels.createSkills(data);
       });
       sucess(res, {

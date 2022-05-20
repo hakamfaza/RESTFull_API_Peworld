@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 
-const { SERVER_HOST, SERVER_PORT } = require('./src/utils/env');
+const { PORT } = require('./src/utils/env');
 
 const auth = require('./src/router/auth.router');
 const users = require('./src/router/users.router');
@@ -38,8 +38,6 @@ const data = () => {
 };
 data();
 
-const host = SERVER_HOST;
-const port = SERVER_PORT;
-app.listen(port, host, () => {
-  console.log(`server running at http://${host}:${port}`);
+app.listen(PORT, () => {
+  console.log(`server running at http://localhost:${PORT}`);
 });
