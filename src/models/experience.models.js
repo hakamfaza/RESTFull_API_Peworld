@@ -12,4 +12,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  getExperience: () => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM experience', (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
