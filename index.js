@@ -38,6 +38,7 @@ const data = () => {
 };
 data();
 
-app.listen(PORT, () => {
-  console.log(`server running at ${PORT}`);
+const APP_PORT = PORT || 4007;
+app.listen(APP_PORT, () => {
+  console.log(`server running at ${APP_PORT}`);
 });
