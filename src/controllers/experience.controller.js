@@ -119,4 +119,35 @@ module.exports = {
       });
     }
   },
+  deleteExperience: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.APP_DATA.tokenDecoded.id;
+
+      const experience = await experienceModels.getDetailExperience(id);
+
+      if (!experience.rowCount) {
+        failed(res, {
+          code: 400,
+          payload: 'experience not found!',
+          message: 'delete experience failed!',
+        });
+        return;
+      }
+
+      const response = await experienceModels.deleteExperience(id, userId);
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'detele experience success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };

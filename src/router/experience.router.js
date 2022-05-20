@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-  createExperience, getExperience, getDetailExperience, updateExperience,
+  createExperience, getExperience, getDetailExperience, updateExperience, deleteExperience,
 } = require('../controllers/experience.controller');
 const jwtAuth = require('../middleware/jwtAuth');
 const upload = require('../middleware/upload');
@@ -11,6 +11,7 @@ router
   .post('/experience', jwtAuth, upload, createExperience)
   .get('/experience', jwtAuth, getExperience)
   .get('/experience/:id', jwtAuth, getDetailExperience)
-  .put('/experience/:id', jwtAuth, upload, updateExperience);
+  .put('/experience/:id', jwtAuth, upload, updateExperience)
+  .delete('/experience/:id', jwtAuth, deleteExperience);
 
 module.exports = router;

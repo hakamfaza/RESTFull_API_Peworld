@@ -39,4 +39,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  deleteExperience: (id, userId) => new Promise((resolve, reject) => {
+    db.query('DELETE FROM experience WHERE id=$1 AND user_id=$2', [id, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
