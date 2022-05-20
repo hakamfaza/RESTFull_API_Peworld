@@ -106,6 +106,9 @@ const userController = {
       const response = await usersModel.updateUsers(insertData);
 
       if (!response.rowCount) {
+        if (req.file) {
+          deleteFile(req.file.path);
+        }
         failed(res, {
           code: 400,
           payload: 'you can\'t update this user!',
