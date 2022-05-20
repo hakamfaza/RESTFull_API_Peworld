@@ -63,4 +63,48 @@ module.exports = {
       });
     }
   },
+  updateSkills: async (req, res) => {
+    try {
+      const data = {
+        skill: req.body.skill,
+        userId: req.APP_DATA.tokenDecoded.id,
+        id: req.params.id,
+      };
+      await skillsModels.updateSkill(data);
+
+      sucess(res, {
+        code: 200,
+        payload: null,
+        message: 'update skill success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  deleteSkill: async (req, res) => {
+    try {
+      const data = {
+        userId: req.APP_DATA.tokenDecoded.id,
+        id: req.params.id,
+      };
+
+      const response = await skillsModels.deleteSkil(data);
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'delete skills success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };

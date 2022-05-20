@@ -28,4 +28,22 @@ module.exports = {
       resolve(result);
     });
   }),
+  updateSkill: (data) => new Promise((resolve, reject) => {
+    const { id, skill, userId } = data;
+    db.query('UPDATE skills SET skill=$1 WHERE id=$2 AND user_id=$3', [skill, id, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
+  deleteSkil: (data) => new Promise((resolve, reject) => {
+    const { id, userId } = data;
+    db.query('DELETE FROM skills WHERE id=$1 AND user_id=$2', [id, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
