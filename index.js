@@ -7,6 +7,7 @@ const { SERVER_HOST, SERVER_PORT } = require('./src/utils/env');
 
 const auth = require('./src/router/auth.router');
 const users = require('./src/router/users.router');
+const portfolio = require('./src/router/portfolio.router');
 
 const app = express();
 
@@ -26,6 +27,7 @@ const data = () => {
   try {
     app.use(auth);
     app.use(users);
+    app.use(portfolio);
   } catch (error) {
     console.log(error);
   }
