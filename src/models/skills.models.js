@@ -12,4 +12,20 @@ module.exports = {
       resolve(result);
     });
   }),
+  getSkills: () => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM skills', (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
+  getMySkills: (userId) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM skills WHERE user_id=$1', [userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };

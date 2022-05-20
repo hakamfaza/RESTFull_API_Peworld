@@ -29,4 +29,38 @@ module.exports = {
       });
     }
   },
+  getSkill: async (req, res) => {
+    try {
+      const response = await skillsModels.getSkills();
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get all skills success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 200,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  getMyskills: async (req, res) => {
+    try {
+      const userId = req.APP_DATA.tokenDecoded.id;
+      const response = await skillsModels.getMySkills(userId);
+
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get my skills success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 200,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
 };
