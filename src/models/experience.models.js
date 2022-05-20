@@ -20,4 +20,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  getDetailExperience: (id) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM experience WHERE id=$1', [id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
