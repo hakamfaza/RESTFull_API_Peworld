@@ -98,11 +98,22 @@ const userController = {
       const insertData = {
         id,
         ...req.body,
+        userId: req.APP_DATA.tokenDecoded.id,
         linkedin: `https://www.linkedin.com/in/${req.body.linkedin}/`,
         instagram: `https://www.instagram.com/${req.body.instagram}/`,
         photo: req.file.filename,
       };
       const response = await usersModel.updateUsers(insertData);
+
+      if (!response.rowCount) {
+        failed(res, {
+          code: 400,
+          payload: 'you can\'t update this user!',
+          message: 'update user failed!',
+        });
+        return;
+      }
+
       sucess(res, {
         code: 200,
         payload: response,
