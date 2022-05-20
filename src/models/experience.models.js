@@ -28,4 +28,15 @@ module.exports = {
       resolve(result);
     });
   }),
+  updateExperience: (body) => new Promise((resolve, reject) => {
+    const {
+      company, profession, description, photo, startDate, resignDate, id, userId,
+    } = body;
+    db.query('UPDATE experience SET company=$1, profession=$2, description=$3, photo=$4, start_date=$5, resign_date=$6 WHERE id=$7 AND user_id=$8', [company, profession, description, photo, startDate, resignDate, id, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
