@@ -128,9 +128,6 @@ module.exports = {
       const portfolio = await portfolioModels.getDetailPortfolio(id);
 
       if (!portfolio.rowCount) {
-        if (req.file) {
-          deleteFile(req.file.path);
-        }
         failed(res, {
           code: 400,
           payload: 'portfolio not found!',
