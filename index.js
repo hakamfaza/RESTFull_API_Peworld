@@ -9,6 +9,7 @@ const auth = require('./src/router/auth.router');
 const users = require('./src/router/users.router');
 const portfolio = require('./src/router/portfolio.router');
 const experience = require('./src/router/experience.router');
+const skills = require('./src/router/skills.router');
 
 const app = express();
 
@@ -30,6 +31,7 @@ const data = () => {
     app.use(users);
     app.use(portfolio);
     app.use(experience);
+    app.use(skills);
   } catch (error) {
     console.log(error);
   }
