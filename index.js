@@ -8,6 +8,7 @@ const { SERVER_HOST, SERVER_PORT } = require('./src/utils/env');
 const auth = require('./src/router/auth.router');
 const users = require('./src/router/users.router');
 const portfolio = require('./src/router/portfolio.router');
+const experience = require('./src/router/experience.router');
 
 const app = express();
 
@@ -28,6 +29,7 @@ const data = () => {
     app.use(auth);
     app.use(users);
     app.use(portfolio);
+    app.use(experience);
   } catch (error) {
     console.log(error);
   }
