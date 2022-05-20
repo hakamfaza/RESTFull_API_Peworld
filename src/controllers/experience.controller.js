@@ -150,4 +150,23 @@ module.exports = {
       });
     }
   },
+  experienceByUser: async (req, res) => {
+    try {
+      const userId = req.APP_DATA.tokenDecoded.id;
+
+      const response = await experienceModels.experienceByUser(userId);
+
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get all experience by user success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server eroor!',
+      });
+    }
+  },
 };

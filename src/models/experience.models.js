@@ -47,4 +47,12 @@ module.exports = {
       resolve(result);
     });
   }),
+  experienceByUser: (userId) => new Promise((resolve, reject) => {
+    db.query('SELECT * FROM experience WHERE user_id=$1', [userId], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  }),
 };
