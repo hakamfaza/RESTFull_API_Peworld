@@ -102,8 +102,6 @@ const userController = {
         id,
         ...req.body,
         userId: req.APP_DATA.tokenDecoded.id,
-        linkedin: `https://www.linkedin.com/in/${req.body.linkedin}/`,
-        instagram: `https://www.instagram.com/${req.body.instagram}/`,
         photo: req.file.filename,
       };
       const response = await usersModel.updateUsers(insertData);
