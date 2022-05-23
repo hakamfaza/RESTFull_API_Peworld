@@ -3,6 +3,7 @@ const experienceModels = require('../models/experience.models');
 const { sucess, failed } = require('../utils/response');
 const deleteFile = require('../utils/deleteFile');
 const skillsModels = require('../models/skills.models');
+const portfolioModels = require('../models/portfolio.models');
 
 const userController = {
   getUser: async (req, res) => {
@@ -53,6 +54,7 @@ const userController = {
 
       const experience = await experienceModels.experienceByUser(id);
       const skills = await skillsModels.getMySkills(id);
+      const portfolio = await portfolioModels.portfolioByUser(id);
 
       sucess(res, {
         code: 200,
@@ -60,6 +62,7 @@ const userController = {
           user: response.rows[0],
           experience: experience.rows,
           skills: skills.rows,
+          portfolio: portfolio.rows,
         },
         message: 'get detail users success!',
       });
