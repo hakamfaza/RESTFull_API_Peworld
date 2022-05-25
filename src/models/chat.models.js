@@ -39,8 +39,6 @@ module.exports = {
   }),
   getMessageFromUser: (data) => new Promise((resolve, reject) => {
     const { fromUserId, userId } = data;
-    console.log(data);
-    console.log(`from${fromUserId} & to ${userId}`);
     db.query('SELECT * FROM chat WHERE from_user_id=$1 AND to_user_id=$2', [fromUserId, userId], (err, result) => {
       if (err) {
         reject(err);
