@@ -10,6 +10,7 @@ const users = require('./src/router/users.router');
 const portfolio = require('./src/router/portfolio.router');
 const experience = require('./src/router/experience.router');
 const skills = require('./src/router/skills.router');
+const message = require('./src/router/chat.router');
 
 const app = express();
 
@@ -32,6 +33,7 @@ const data = () => {
     app.use(portfolio);
     app.use(experience);
     app.use(skills);
+    app.use(message);
   } catch (error) {
     console.log(error);
   }
