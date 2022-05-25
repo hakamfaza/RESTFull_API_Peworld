@@ -10,6 +10,7 @@ const users = require('./src/router/users.router');
 const portfolio = require('./src/router/portfolio.router');
 const experience = require('./src/router/experience.router');
 const skills = require('./src/router/skills.router');
+const message = require('./src/router/chat.router');
 
 const app = express();
 
@@ -32,12 +33,14 @@ const data = () => {
     app.use(portfolio);
     app.use(experience);
     app.use(skills);
+    app.use(message);
   } catch (error) {
     console.log(error);
   }
 };
 data();
 
-app.listen(PORT, () => {
-  console.log(`server running at http://localhost:${PORT}`);
+const APP_PORT = PORT || 4007;
+app.listen(APP_PORT, () => {
+  console.log(`server running at ${APP_PORT}`);
 });
