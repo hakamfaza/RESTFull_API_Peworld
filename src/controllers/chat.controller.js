@@ -66,6 +66,27 @@ module.exports = {
       });
     }
   },
+  getMessageFromUser: async (req, res) => {
+    try {
+      const data = {
+        userId: req.APP_DATA.tokenDecoded.id,
+        fromUserId: req.params.id,
+      };
+
+      const response = await chatModels.getMessageFromUser(data);
+      sucess(res, {
+        code: 200,
+        payload: response.rows,
+        message: 'get all message to user success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
   deleteMessage: async (req, res) => {
     try {
       const { id } = req.params;
