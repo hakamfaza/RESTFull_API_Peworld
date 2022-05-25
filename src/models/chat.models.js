@@ -12,7 +12,7 @@ module.exports = {
       resolve(result);
     });
   }),
-  readMessage: () => new Promise((resolve, reject) => {
+  getMessage: () => new Promise((resolve, reject) => {
     db.query('SELECT * FROM chat', (err, result) => {
       if (err) {
         reject(err);
@@ -28,8 +28,8 @@ module.exports = {
       resolve(result);
     });
   }),
-  messageByUser: (body) => new Promise((resolve, reject) => {
-    const { userId, toUserId } = body;
+  getMessageByUser: (data) => new Promise((resolve, reject) => {
+    const { userId, toUserId } = data;
     db.query('SELECT * FROM chat WHERE from_user_id=$1 AND to_user_id=$2', [userId, toUserId], (err, result) => {
       if (err) {
         reject(err);
