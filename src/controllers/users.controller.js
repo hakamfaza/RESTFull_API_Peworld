@@ -31,18 +31,30 @@ const userController = {
         totalData,
       };
 
-      const response = await usersModel.getUser(getSearch, sortByField, sortByType, getLimitValue, getOffsetValue, getIsActive);
+      const users = await usersModel.getUser(getSearch, sortByField, sortByType, getLimitValue, getOffsetValue, getIsActive);
+
+      const data = await users.rows.map(async (value) => {
+        const skill = await skillsModels.getMySkills(value.id);
+        const porto = await portfolioModels.portfolioByUser(value.id);
+        const object = {
+          user: value,
+          skill: skill.rows,
+          portfolio: porto.rows,
+        };
+        return object;
+      });
+      const respon = await Promise.all(data);
 
       sucess(res, {
         code: 200,
-        payload: response.rows,
+        payload: respon,
         message: 'get all users success!',
         pagination,
       });
     } catch (error) {
       failed(res, {
         code: 500,
-        payload: error,
+        payload: error.message,
         message: 'internal server error!',
       });
     }
