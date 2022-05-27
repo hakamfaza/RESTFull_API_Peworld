@@ -90,6 +90,39 @@ const userController = {
     try {
       const { id } = req.params;
 
+      const insertData = {
+        id,
+        ...req.body,
+        userId: req.APP_DATA.tokenDecoded.id,
+      };
+      const response = await usersModel.updateUsers(insertData);
+
+      if (!response.rowCount) {
+        failed(res, {
+          code: 400,
+          payload: 'you can\'t update this user!',
+          message: 'update user failed!',
+        });
+        return;
+      }
+
+      sucess(res, {
+        code: 200,
+        payload: response,
+        message: 'update users success!',
+      });
+    } catch (error) {
+      failed(res, {
+        code: 500,
+        payload: error.message,
+        message: 'internal server error!',
+      });
+    }
+  },
+  updateProfile: async (req, res) => {
+    try {
+      const { id } = req.params;
+
       const user = await usersModel.getDetailUser(id);
 
       if (!user.rowCount) {
@@ -99,7 +132,7 @@ const userController = {
         failed(res, {
           code: 400,
           payload: 'user not found!',
-          message: 'update user failed!',
+          message: 'update profile failed!',
         });
         return;
       }
@@ -114,9 +147,8 @@ const userController = {
         id,
         ...req.body,
         userId: req.APP_DATA.tokenDecoded.id,
-        photo: req.file.filename,
       };
-      const response = await usersModel.updateUsers(insertData);
+      const response = await usersModel.updateProfile(insertData);
 
       if (!response.rowCount) {
         if (req.file) {
@@ -124,8 +156,8 @@ const userController = {
         }
         failed(res, {
           code: 400,
-          payload: 'you can\'t update this user!',
-          message: 'update user failed!',
+          payload: 'you can\'t update this profile!',
+          message: 'update profile failed!',
         });
         return;
       }
@@ -133,7 +165,7 @@ const userController = {
       sucess(res, {
         code: 200,
         payload: response,
-        message: 'update users success!',
+        message: 'update profile success!',
       });
     } catch (error) {
       failed(res, {
