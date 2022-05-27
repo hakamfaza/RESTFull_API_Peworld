@@ -147,6 +147,7 @@ const userController = {
         id,
         ...req.body,
         userId: req.APP_DATA.tokenDecoded.id,
+        photo: req.file.filename,
       };
       const response = await usersModel.updateProfile(insertData);
 
