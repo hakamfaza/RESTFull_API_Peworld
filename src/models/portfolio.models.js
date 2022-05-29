@@ -3,9 +3,9 @@ const db = require('../config/db');
 module.exports = {
   createPortfolio: (body) => new Promise((resolve, reject) => {
     const {
-      id, userId, title, photo, date,
+      id, userId, title, photo, date, repository,
     } = body;
-    db.query('INSERT INTO portfolio (id, user_id, title, photo, date) VALUES ($1, $2, $3, $4, $5)', [id, userId, title, photo, date], (err, result) => {
+    db.query('INSERT INTO portfolio (id, user_id, title, photo, date, repository) VALUES ($1, $2, $3, $4, $5, $6)', [id, userId, title, photo, date, repository], (err, result) => {
       if (err) {
         reject(err);
       }
