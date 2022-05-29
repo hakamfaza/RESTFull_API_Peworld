@@ -35,9 +35,9 @@ module.exports = {
   }),
   updateUsers: (body) => new Promise((resolve, reject) => {
     const {
-      id, name, jobDesk, address, workplace, description, instagram, linkedin, userId,
+      id, name, jobDesk, address, workplace, description, instagram, linkedin, email, phone, userId,
     } = body;
-    db.query('UPDATE users SET name=$1, job_desk=$2, address=$3, workplace=$4, description=$5, linkedin=$6, instagram=$7 WHERE id=$8 AND id=$9', [name, jobDesk, address, workplace, description, linkedin, instagram, id, userId], (err, result) => {
+    db.query('UPDATE users SET name=$1, job_desk=$2, address=$3, workplace=$4, description=$5, linkedin=$6, instagram=$7, email=$8, phone=$9 WHERE id=$10 AND id=$11', [name, jobDesk, address, workplace, description, linkedin, instagram, email, phone, id, userId], (err, result) => {
       if (err) {
         reject(err);
       }
