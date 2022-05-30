@@ -30,9 +30,9 @@ module.exports = {
   }),
   updatePortfolio: (body) => new Promise((resolve, reject) => {
     const {
-      title, photo, id, userId,
+      title, photo, id, userId, repository,
     } = body;
-    db.query('UPDATE portfolio SET title=$1, photo=$2 WHERE id=$3 AND user_id=$4', [title, photo, id, userId], (err, result) => {
+    db.query('UPDATE portfolio SET title=$1, photo=$2, repository=$3 WHERE id=$4 AND user_id=$5', [title, photo, repository, id, userId], (err, result) => {
       if (err) {
         reject(err);
       }

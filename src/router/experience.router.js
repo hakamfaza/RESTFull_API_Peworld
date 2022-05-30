@@ -9,10 +9,10 @@ const upload = require('../middleware/upload');
 const router = express.Router();
 
 router
-  .post('/experience', jwtAuth, upload, createExperience)
+  .post('/experience', jwtAuth, createExperience)
   .get('/experience', jwtAuth, getExperience)
   .get('/experience/:id', jwtAuth, getDetailExperience)
-  .put('/experience/:id', jwtAuth, upload, updateExperience)
+  .put('/experience/:id', jwtAuth, updateExperience)
   .delete('/experience/:id', jwtAuth, deleteExperience)
   .get('/userExperience', jwtAuth, experienceByUser);
 

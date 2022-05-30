@@ -8,10 +8,10 @@ const upload = require('../middleware/upload');
 const router = express.Router();
 
 router
-  .post('/portfolio', jwtAuth, upload, createPortfolio)
+  .post('/portfolio', jwtAuth, createPortfolio)
   .get('/portfolio', jwtAuth, getPortfolio)
   .get('/portfolio/:id', jwtAuth, getDetailPortfolio)
-  .put('/portfolio/:id', jwtAuth, upload, updatePortfolio)
+  .put('/portfolio/:id', jwtAuth, updatePortfolio)
   .delete('/portfolio/:id', jwtAuth, deletePorfolio)
   .get('/portfolioByUser', jwtAuth, portfolioByUser);
 

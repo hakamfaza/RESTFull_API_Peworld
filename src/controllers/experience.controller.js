@@ -11,7 +11,7 @@ module.exports = {
         id: uuidv4(),
         userId: req.APP_DATA.tokenDecoded.id,
         date: new Date(),
-        photo: req.file.filename,
+        // photo: req.file.filename,
       };
 
       const response = await experienceModels.createExperience(insertData);
@@ -71,9 +71,9 @@ module.exports = {
       const experience = await experienceModels.getDetailExperience(id);
 
       if (!experience.rowCount) {
-        if (req.file) {
-          deleteFile(req.file.path);
-        }
+        // if (req.file) {
+        //   deleteFile(req.file.path);
+        // }
         failed(res, {
           code: 400,
           payload: 'experience not found!',
@@ -82,17 +82,17 @@ module.exports = {
         return;
       }
 
-      if (req.file) {
-        if (req.file) {
-          deleteFile(`public/${experience.rows[0].photo}`);
-        }
-      }
+      // if (req.file) {
+      //   if (req.file) {
+      //     deleteFile(`public/${experience.rows[0].photo}`);
+      //   }
+      // }
 
       const insertData = {
         ...req.body,
         userId: req.APP_DATA.tokenDecoded.id,
         id,
-        photo: req.file.filename,
+        // photo: req.file.filename,
       };
 
       const response = await experienceModels.updateExperience(insertData);

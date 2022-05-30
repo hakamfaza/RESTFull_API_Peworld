@@ -11,7 +11,7 @@ module.exports = {
         id: uuidv4(),
         userId: req.APP_DATA.tokenDecoded.id,
         date: new Date(),
-        photo: req.file.filename,
+        // photo: req.file.filename,
       };
       await portfolioModels.createPortfolio(inserData);
 
@@ -69,9 +69,9 @@ module.exports = {
       const portfolio = await portfolioModels.getDetailPortfolio(id);
 
       if (!portfolio.rowCount) {
-        if (req.file) {
-          deleteFile(req.file.path);
-        }
+        // if (req.file) {
+        //   deleteFile(req.file.path);
+        // }
         failed(res, {
           code: 400,
           payload: 'portfolio not found!',
@@ -80,25 +80,25 @@ module.exports = {
         return;
       }
 
-      if (req.file) {
-        if (portfolio.rows[0].photo) {
-          deleteFile(`public/${portfolio.rows[0].photo}`);
-        }
-      }
+      // if (req.file) {
+      //   if (portfolio.rows[0].photo) {
+      //     deleteFile(`public/${portfolio.rows[0].photo}`);
+      //   }
+      // }
 
       const insertData = {
+        ...req.body,
         id: req.params.id,
-        photo: req.file.filename,
-        title: req.body.title,
+        // photo: req.file.filename,
         userId,
       };
 
       const response = await portfolioModels.updatePortfolio(insertData);
 
       if (!response.rowCount) {
-        if (req.file) {
-          deleteFile(req.file.path);
-        }
+        // if (req.file) {
+        //   deleteFile(req.file.path);
+        // }
         failed(res, {
           code: 400,
           payload: 'can\'t update this portfolio!',
